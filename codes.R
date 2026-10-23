@@ -501,9 +501,9 @@ time=seq(1,132)
 x=xx[!is.na(xx)&xx>0]
 n=length(x)
 
+s=fgev(x,std.err=FALSE)
 f=function (p)
-{s=fgev(x,std.err=FALSE)
-tt=-sum(dgev(x,loc=exp(p[1]),scale=exp(p[2]),shape=p[3],log=TRUE))
+{tt=-sum(dgev(x,loc=exp(p[1]),scale=exp(p[2]),shape=p[3],log=TRUE))
 if (is.na(tt)) tt=1.0e20
 if (abs(tt)>1.0e20) tt=1.0e20
 return(tt)}

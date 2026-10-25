@@ -725,7 +725,6 @@ cat(label[ii]," & ",formatC(r2,format="f",digits=3),
 formatC(r10,format="f",digits=3),"\n")}
 
 if (ibest[ii]==2)
-{f=function (p)
 {s=fgev(x,std.err=FALSE)
 f=function (p)
 {tt=-sum(dgev(x,loc=exp(p[1]),scale=exp(p[2]),shape=p[3],log=TRUE))
@@ -734,7 +733,8 @@ if (abs(tt)>1.0e20) tt=1.0e20
 return(tt)}
 est1=optim(f,par=c(log(s$estimate[1]),log(s$estimate[2]),s$estimate[3]),control=list(maxit=1000000))
 #
-tt=0
+f=function (p)
+{tt=0
 for (i in 1:n) tt=tt-dgev(x[i],loc=exp(p[1]+p[4]*time2[i]),
 scale=exp(p[2]),shape=p[3],log=TRUE)
 if (is.na(tt)) tt=1.0e20

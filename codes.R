@@ -126,9 +126,9 @@ control=list(maxit=1000000))
 if (2*(est1$value-est2$value)<q1&2*(est1$value-est3$value)<q1
 &2*(est1$value-est4$value)<q2) ibest[ii]=1
 if (2*(est1$value-est2$value)>q1&est2$value<est3$value
-&2*(est2$value-est4$value)<q2) ibest[ii]=2
+&2*(est2$value-est4$value)<q1) ibest[ii]=2
 if (2*(est1$value-est3$value)>q1&est3$value<est2$value
-&2*(est3$value-est4$value)<q2) ibest[ii]=3
+&2*(est3$value-est4$value)<q1) ibest[ii]=3
 if (2*(est1$value-est4$value)>q2&2*(est2$value-est4$value)>q1
 &2*(est3$value-est4$value)>q1) ibest[ii]=4}
 
@@ -310,6 +310,7 @@ pp1=pv
 pp2=pv
 pp3=pv
 pp4=pv
+pobs=pv
 for (j in seq(1,n))
 {j1=j-1
 j2=j+1
@@ -408,6 +409,7 @@ pp2=pv
 pp3=pv
 pp4=pv
 pp5=pv
+pobs=pv
 for (j in seq(1,n))
 {j1=j-1
 j2=j+1
@@ -584,7 +586,15 @@ cat(label[ii]," & ",formatC(r2,format="f",digits=3),
 formatC(r10,format="f",digits=3),"\n")}
 
 if (ibest[ii]==2)
-{f=function (p)
+{s=fgev(x,std.err=FALSE)
+f=function (p)
+{tt=-sum(dgev(x,loc=exp(p[1]),scale=exp(p[2]),shape=p[3],log=TRUE))
+if (is.na(tt)) tt=1.0e20
+if (abs(tt)>1.0e20) tt=1.0e20
+return(tt)}
+est1=optim(f,par=c(log(s$estimate[1]),log(s$estimate[2]),s$estimate[3]),control=list(maxit=1000000))
+#
+f=function (p)
 {tt=0
 for (i in 1:n) tt=tt-dgev(x[i],loc=exp(p[1]+p[4]*time2[i]),
 scale=exp(p[2]),shape=p[3],log=TRUE)
@@ -607,7 +617,15 @@ cat(label[ii]," & ",formatC(r2,format="f",digits=3),
 formatC(r10,format="f",digits=3),"\n")}
 
 if (ibest[ii]==3)
-{f=function (p)
+{s=fgev(x,std.err=FALSE)
+f=function (p)
+{tt=-sum(dgev(x,loc=exp(p[1]),scale=exp(p[2]),shape=p[3],log=TRUE))
+if (is.na(tt)) tt=1.0e20
+if (abs(tt)>1.0e20) tt=1.0e20
+return(tt)}
+est1=optim(f,par=c(log(s$estimate[1]),log(s$estimate[2]),s$estimate[3]),control=list(maxit=1000000))
+#
+f=function (p)
 {tt=0
 for (i in 1:n) tt=tt-dgev(x[i],loc=exp(p[1]),
 scale=exp(p[2]+p[4]*time2[i]),shape=p[3],log=TRUE)
@@ -630,7 +648,25 @@ cat(label[ii]," & ",formatC(r2,format="f",digits=3),
 formatC(r10,format="f",digits=3),"\n")}
 
 if (ibest[ii]==4)
-{f=function (p)
+{s=fgev(x,std.err=FALSE)
+f=function (p)
+{tt=-sum(dgev(x,loc=exp(p[1]),scale=exp(p[2]),shape=p[3],log=TRUE))
+if (is.na(tt)) tt=1.0e20
+if (abs(tt)>1.0e20) tt=1.0e20
+return(tt)}
+est1=optim(f,par=c(log(s$estimate[1]),log(s$estimate[2]),s$estimate[3]),control=list(maxit=1000000))
+#
+f=function (p)
+{tt=0
+for (i in 1:n) tt=tt-dgev(x[i],loc=exp(p[1]+p[4]*time2[i]),
+scale=exp(p[2]),shape=p[3],log=TRUE)
+if (is.na(tt)) tt=1.0e20
+if (abs(tt)>1.0e20) tt=1.0e20
+return(tt)}
+est2=optim(f,par=c(est1$par[1],est1$par[2],est1$par[3],0),
+control=list(maxit=1000000))
+#
+f=function (p)
 {tt=0
 for (i in 1:n) tt=tt-dgev(x[i],loc=exp(p[1]+p[4]*time2[i]),
 scale=exp(p[2]+p[5]*time2[i]),shape=p[3],log=TRUE)
@@ -690,7 +726,15 @@ formatC(r10,format="f",digits=3),"\n")}
 
 if (ibest[ii]==2)
 {f=function (p)
-{tt=0
+{s=fgev(x,std.err=FALSE)
+f=function (p)
+{tt=-sum(dgev(x,loc=exp(p[1]),scale=exp(p[2]),shape=p[3],log=TRUE))
+if (is.na(tt)) tt=1.0e20
+if (abs(tt)>1.0e20) tt=1.0e20
+return(tt)}
+est1=optim(f,par=c(log(s$estimate[1]),log(s$estimate[2]),s$estimate[3]),control=list(maxit=1000000))
+#
+tt=0
 for (i in 1:n) tt=tt-dgev(x[i],loc=exp(p[1]+p[4]*time2[i]),
 scale=exp(p[2]),shape=p[3],log=TRUE)
 if (is.na(tt)) tt=1.0e20
@@ -712,7 +756,15 @@ cat(label[ii]," & ",formatC(r2,format="f",digits=3),
 formatC(r10,format="f",digits=3),"\n")}
 
 if (ibest[ii]==3)
-{f=function (p)
+{s=fgev(x,std.err=FALSE)
+f=function (p)
+{tt=-sum(dgev(x,loc=exp(p[1]),scale=exp(p[2]),shape=p[3],log=TRUE))
+if (is.na(tt)) tt=1.0e20
+if (abs(tt)>1.0e20) tt=1.0e20
+return(tt)}
+est1=optim(f,par=c(log(s$estimate[1]),log(s$estimate[2]),s$estimate[3]),control=list(maxit=1000000))
+#
+f=function (p)
 {tt=0
 for (i in 1:n) tt=tt-dgev(x[i],loc=exp(p[1]),
 scale=exp(p[2]+p[4]*time2[i]),shape=p[3],log=TRUE)
@@ -735,7 +787,25 @@ cat(label[ii]," & ",formatC(r2,format="f",digits=3),
 formatC(r10,format="f",digits=3),"\n")}
 
 if (ibest[ii]==4)
-{f=function (p)
+{s=fgev(x,std.err=FALSE)
+f=function (p)
+{tt=-sum(dgev(x,loc=exp(p[1]),scale=exp(p[2]),shape=p[3],log=TRUE))
+if (is.na(tt)) tt=1.0e20
+if (abs(tt)>1.0e20) tt=1.0e20
+return(tt)}
+est1=optim(f,par=c(log(s$estimate[1]),log(s$estimate[2]),s$estimate[3]),control=list(maxit=1000000))
+#
+f=function (p)
+{tt=0
+for (i in 1:n) tt=tt-dgev(x[i],loc=exp(p[1]+p[4]*time2[i]),
+scale=exp(p[2]),shape=p[3],log=TRUE)
+if (is.na(tt)) tt=1.0e20
+if (abs(tt)>1.0e20) tt=1.0e20
+return(tt)}
+est2=optim(f,par=c(est1$par[1],est1$par[2],est1$par[3],0),
+control=list(maxit=1000000))
+#
+f=function (p)
 {tt=0
 for (i in 1:n) tt=tt-dgev(x[i],loc=exp(p[1]+p[4]*time2[i]),
 scale=exp(p[2]+p[5]*time2[i]),shape=p[3],log=TRUE)

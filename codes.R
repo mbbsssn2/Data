@@ -249,11 +249,12 @@ if (j==n) pexp2=seq(1,(n-1))/(n+1)
 if (j1>=1&j2<=n) pexp2=c(seq(1,j1),seq(j2,n))/(n+1)
 for (i in seq(1,n))
 pobs[i]=pgev(x[i],loc=exp(pp1[j]+pp4[j]*time2[i]),scale=exp(pp2[j]),shape=pp3[j])
-if (j==1) pobs2=pobs[seq(2,n)]
-if (j==n) pobs2=pobs[seq(1,(n-1))]
-if (j1>=1&j2<=n) pobs2=c(pobs[seq(1,j1)],pobs[seq(j2,n)])
-ss=sort(pobs2)
-pv[j]=cont_ks_c_cdf(max(abs(ss-pexp2)),n-1)}
+ss=sort(pobs)
+pobs2=pobs
+if (j==1) pobs2=ss[seq(2,n)]
+if (j==n) pobs2=ss[seq(1,(n-1))]
+if (j1>=1&j2<=n) pobs2=c(ss[seq(1,j1)],ss[seq(j2,n)])
+pv[j]=cont_ks_c_cdf(max(abs(pobs2-pexp2)),n-1)}
 
 cat(label[ii]," & ",formatC(ee,format="f",digits=3),
 " & ",formatC(p1,format="f",digits=3)," (",
@@ -334,11 +335,12 @@ if (j==n) pexp2=seq(1,(n-1))/(n+1)
 if (j1>=1&j2<=n) pexp2=c(seq(1,j1),seq(j2,n))/(n+1)
 for (i in seq(1,n))
 pobs[i]=pgev(x[i],loc=exp(pp1[j]),scale=exp(pp2[j]+pp4[j]*time2[i]),shape=pp3[j])
-if (j==1) pobs2=pobs[seq(2,n)]
-if (j==n) pobs2=pobs[seq(1,(n-1))]
-if (j1>=1&j2<=n) pobs2=c(pobs[seq(1,j1)],pobs[seq(j2,n)])
-ss=sort(pobs2)
-pv[j]=cont_ks_c_cdf(max(abs(ss-pexp2)),n-1)}
+ss=sort(pobs)
+pobs2=pobs
+if (j==1) pobs2=ss[seq(2,n)]
+if (j==n) pobs2=ss[seq(1,(n-1))]
+if (j1>=1&j2<=n) pobs2=c(ss[seq(1,j1)],ss[seq(j2,n)])
+pv[j]=cont_ks_c_cdf(max(abs(pobs2-pexp2)),n-1)}
 
 cat(label[ii]," & ",formatC(ee,format="f",digits=3),
 " & ",formatC(p1,format="f",digits=3)," (",
@@ -437,11 +439,12 @@ if (j1>=1&j2<=n) pexp2=c(seq(1,j1),seq(j2,n))/(n+1)
 for (i in seq(1,n))
 pobs[i]=pgev(x[i],loc=exp(pp1[j]+pp4[j]*time2[i]),
 scale=exp(pp2[j]+pp5[j]*time2[i]),shape=pp3[j])
-if (j==1) pobs2=pobs[seq(2,n)]
-if (j==n) pobs2=pobs[seq(1,(n-1))]
-if (j1>=1&j2<=n) pobs2=c(pobs[seq(1,j1)],pobs[seq(j2,n)])
-ss=sort(pobs2)
-pv[j]=cont_ks_c_cdf(max(abs(ss-pexp2)),n-1)}
+ss=sort(pobs)
+pobs2=pobs
+if (j==1) pobs2=ss[seq(2,n)]
+if (j==n) pobs2=ss[seq(1,(n-1))]
+if (j1>=1&j2<=n) pobs2=c(ss[seq(1,j1)],ss[seq(j2,n)])
+pv[j]=cont_ks_c_cdf(max(abs(pobs2-pexp2)),n-1)}
 
 cat(label[ii]," & ",formatC(ee,format="f",digits=3),
 " & ",formatC(p1,format="f",digits=3)," (",
